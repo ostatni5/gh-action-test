@@ -19,7 +19,7 @@ jobs:
         with:
           ref: ${{ steps.comment-branch.outputs.head_ref }}
 
-      - uses: ./.github/workflows/sandbox.yml
+      - uses: ostatni5/gh-action-test/.github/workflows/sandbox.yml@main
         with:
           BRANCH_REF: ${{ steps.comment-branch.outputs.head_ref }}
 
