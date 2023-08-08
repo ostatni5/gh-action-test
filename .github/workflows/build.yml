@@ -1,0 +1,23 @@
+name: Build docker image
+
+on:
+  workflow_call:
+    inputs:
+      BRANCH_REF:
+        description: "Branch ref"
+        required: false
+        type: string
+        default: ${{ github.ref }}
+
+jobs:
+  build-and-push-image:
+    name: Docker build and push 🐳
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.BRANCH_REF }}
