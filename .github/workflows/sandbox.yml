@@ -1,0 +1,38 @@
+name: Build sandbox
+
+on:
+  push:
+    branches:
+      - sandbox
+  workflow_call:
+    inputs:
+      BRANCH_REF:
+        description: "Branch ref"
+        required: false
+        type: string
+        default: ${{ github.ref }}
+
+jobs:
+  package:
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/build.yml
+    with:
+      BRANCH_REF: ${{ inputs.BRANCH_REF || github.ref }}
+    secrets:
+      token_github: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    needs: [package]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout repository 🛎️
+        uses: actions/checkout@c85c95e3d7251135ab7dc9ce3241c5835cc595a9
+        with:
+          ref: ${{ inputs.BRANCH_REF || github.ref }}
+
