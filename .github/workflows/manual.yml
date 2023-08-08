@@ -34,7 +34,7 @@ jobs:
           script: |
             const workflow_name = '${{ github.workflow	}}';
             const url = '${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}';
-            const success = '${{ needs.build.status }}' === 'success';
+            const success = '${{ jobs.build.status }}' === 'success';
             const body = `${workflow_name}: ${success ? 'succeeded ✅' : 'failed ❌'}\n${url}`;
             await github.rest.issues.createComment({
               issue_number: context.issue.number,
