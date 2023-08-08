@@ -17,8 +17,6 @@ jobs:
     uses: ./.github/workflows/build.yml
     with:
       BRANCH_REF: ${{ inputs.BRANCH_REF || github.ref }}
-    secrets:
-      token_github: ${{ secrets.GITHUB_TOKEN }}
 
   deploy:
     needs: [package]
